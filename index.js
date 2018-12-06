@@ -14,9 +14,7 @@ const app = express()
 app.use(logger)
 app.use(express.static('build'))
 
-const valittuTagi = 'tag1'
-
-const measurementsQuery = (SQL`SELECT * FROM observations WHERE timestamp > UNIX_TIMESTAMP() - 9000000 AND tagname = ${valittuTagi}`)
+const measurementsQuery = (SQL`SELECT * FROM observations WHERE timestamp > UNIX_TIMESTAMP() - 9000000`)
 
 function querySQL(query) {
   return new Promise(function (resolve, reject) {
@@ -37,6 +35,14 @@ app.get('/', (req, res) => {
 app.get('/measurements', async (req, res) => {
 
   const measurements = await querySQL(measurementsQuery)
+
+  res.json(measurements)
+})
+
+app.get('/measurements/:tag', async (req, res) => {
+  const tagi = req.params.tag
+  const queryString = (SQL`SELECT * FROM observations WHERE timestamp > UNIX_TIMESTAMP() - 9000000 AND tagname = ${tagi}`)
+  const measurements = await querySQL(queryString)
 
   res.json(measurements)
 })
