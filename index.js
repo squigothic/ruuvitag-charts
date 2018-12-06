@@ -1,6 +1,7 @@
 const express = require('express')
 const connection = require('./db_connection')
 const SQL = require('sql-template-strings')
+const cors = require('cors')
 
 const logger = (request, response, next) => {
   console.log('Method:',request.method)
@@ -11,6 +12,7 @@ const logger = (request, response, next) => {
 }
 
 const app = express()
+app.use(cors())
 app.use(logger)
 app.use(express.static('build'))
 
