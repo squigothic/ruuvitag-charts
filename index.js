@@ -16,13 +16,13 @@ app.use(cors())
 app.use(logger)
 app.use(express.static('build'))
 
-const measurementsQuery = (SQL`SELECT * FROM observations WHERE timestamp > UNIX_TIMESTAMP() - 9000000`)
+const measurementsQuery = (SQL`SELECT * FROM observations WHERE timestamp > UNIX_TIMESTAMP() - 900000`)
 
 function querySQL(query) {
   return new Promise(function (resolve, reject) {
     connection.query(query, (error, results) => {
       const stringify = JSON.stringify(results)
-      console.log(stringify)
+      //console.log(stringify)
       const json = JSON.parse(stringify)
       resolve(json)
       reject(new Error('tuli virhe!'))
@@ -43,7 +43,7 @@ app.get('/measurements', async (req, res) => {
 
 app.get('/measurements/:tag', async (req, res) => {
   const tagi = req.params.tag
-  const queryString = (SQL`SELECT * FROM observations WHERE timestamp > UNIX_TIMESTAMP() - 9000000 AND tagname = ${tagi}`)
+  const queryString = (SQL`SELECT * FROM observations WHERE timestamp > UNIX_TIMESTAMP() - 900000 AND tagname = ${tagi}`)
   const measurements = await querySQL(queryString)
 
   res.json(measurements)
