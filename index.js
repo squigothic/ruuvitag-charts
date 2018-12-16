@@ -2,8 +2,10 @@ const express = require('express')
 const connection = require('./db_connection')
 const SQL = require('sql-template-strings')
 const cors = require('cors')
+const compression = require('compression')
 
 const logger = (request, response, next) => {
+  console.log(new Date())
   console.log('Method:',request.method)
   console.log('Path:  ', request.path)
   console.log('Body:  ', request.body)
@@ -12,6 +14,7 @@ const logger = (request, response, next) => {
 }
 
 const app = express()
+app.use(compression())
 app.use(cors())
 app.use(logger)
 app.use(express.static('build'))
