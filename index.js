@@ -19,7 +19,7 @@ app.use(cors())
 app.use(logger)
 app.use(express.static('build'))
 
-const measurementsQuery = (SQL`SELECT * FROM observations WHERE timestamp > UNIX_TIMESTAMP() - 9000000`)
+const measurementsQuery = (SQL`SELECT * FROM observations WHERE timestamp > UNIX_TIMESTAMP() - 87000`)
 
 function querySQL(query) {
   return new Promise(function (resolve, reject) {
@@ -46,7 +46,7 @@ app.get('/measurements', async (req, res) => {
 
 app.get('/measurements/:tag', async (req, res) => {
   const tagi = req.params.tag
-  const queryString = (SQL`SELECT * FROM observations WHERE timestamp > UNIX_TIMESTAMP() - 9000000 AND tagname = ${tagi}`)
+  const queryString = (SQL`SELECT * FROM observations WHERE timestamp > UNIX_TIMESTAMP() - 87000 AND tagname = ${tagi}`)
   const measurements = await querySQL(queryString)
 
   res.json(measurements)
