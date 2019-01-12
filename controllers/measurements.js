@@ -17,7 +17,7 @@ function querySQL(query) {
 }
 
 measurementsRouter.get('/', (req, res) => {
-  //res.send('<h1>Hello World!</h1>')
+  res.send('<h1>Hello World!</h1>')
 })
 
 measurementsRouter.get('/measurements', async (req, res) => {
