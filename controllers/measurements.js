@@ -37,9 +37,9 @@ measurementsRouter.get('/measurements/:tag', async (req, res) => {
 })
 
 measurementsRouter.get('/last', async (req, res) => {
-  const queryString = (SQL `SELECT * FROM observations WHERE timestamp > UNIX_TIMESTAMP() - 5000`)
+  const queryString = (SQL`SELECT * FROM observations WHERE timestamp > UNIX_TIMESTAMP() - 5000`)
   const measurements = await querySQL(queryString)
-  const lastMeasurements = measurements.map(n => n.timestamp).sort( (a, b) => a - b).reverse()[0]
+  const lastMeasurements = measurements.map(n => n.timestamp).sort((a, b) => a - b).reverse()[0]
   //console.log(lastMeasurements)
   const lastTemps = measurements.filter(n => n.timestamp === lastMeasurements)
   console.log(lastTemps)
