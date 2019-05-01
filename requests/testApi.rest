@@ -1,0 +1,33 @@
+POST http://localhost:3001/queryData HTTP/1.1
+Content-Type: application/json
+
+{
+  "responseId": "87b334e9-a120-40f6-9719-8722b07a36a1-bca4db85",
+  "queryResult": {
+    "queryText": "what is bedroom temperature",
+    "parameters": {
+      "Room": "bedroom",
+      "Value": "temperature"
+    },
+    "allRequiredParamsPresent": true,
+    "fulfillmentMessages": [
+      {
+        "text": {
+          "text": [
+            ""
+          ]
+        }
+      }
+    ],
+    "intent": {
+      "name": "projects/indoortemp-f1d63/agent/intents/5eb9b93f-1d7e-47ca-8e27-0ac86bdbc00c",
+      "displayName": "QueryData"
+    },
+    "intentDetectionConfidence": 0.8324282,
+    "languageCode": "en"
+  },
+  "originalDetectIntentRequest": {
+    "payload": {}
+  },
+  "session": "projects/indoortemp-f1d63/agent/sessions/69ac6ccf-16c2-7166-434b-64fdd06057e1"
+}
