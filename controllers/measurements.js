@@ -1,6 +1,8 @@
 const measurementsRouter = require('express').Router()
 const SQL = require('sql-template-strings')
 const connection = require('../db_connection')
+const createResponse = require('../utils/createResponse')
+
 
 const measurementsQuery = (SQL`SELECT * FROM observations WHERE timestamp > UNIX_TIMESTAMP() - 87000`)
 
@@ -44,6 +46,29 @@ measurementsRouter.get('/last', async (req, res) => {
   const lastTemps = measurements.filter(n => n.timestamp === lastMeasurements)
   console.log(lastTemps)
   res.json(lastTemps)
+})
+
+measurementsRouter.post('/queryData', async (req, res) => {
+  const body = req.body
+  const room = body.queryResult.parameters.room
+  const requestedValue = body.queryResult.parameters.value
+  console.log('requestedValue: ', requestedValue)
+
+  let tagi = ''
+
+  if (room === 'bedroom') {
+    tagi = 'tag1'
+  } else if (room === 'balcony') {
+    tagi = 'tag2'
+  }
+
+  const queryString = (SQL`SELECT * FROM observations WHERE timestamp > UNIX_TIMESTAMP() - 300 AND tagname = ${tagi}`)
+  const measurements = await querySQL(queryString)
+
+  const value = measurements[0][requestedValue]
+
+  console.log('pyydetty arvo on:', value)
+  res.json(createResponse(value, requestedValue, room))
 })
 
 module.exports = measurementsRouter
