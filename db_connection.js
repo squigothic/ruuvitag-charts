@@ -20,7 +20,6 @@ if (process.env.INSTANCE_CONNECTION_NAME && process.env.NODE_ENV === 'production
 
 const connection = mysql.createConnection(config)
 
-console.log('luodaan sql-yhteys parametreilla: ', connection.config.socketPath)
 connection.connect((err) => {
   if (err) {
     return console.log('error: ' + err.message)
