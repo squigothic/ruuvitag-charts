@@ -1,7 +1,11 @@
 {
   "name": "ruuvibackend",
   "version": "1.0.0",
-  "description": "",
+  "description": "backend for ruuvitag info system",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/squigothic/ruuvitag-charts.git"
+  },
   "main": "index.js",
   "dependencies": {
     "body-parser": "^1.19.0",
@@ -13,9 +17,12 @@
     "mysql": "^2.16.0",
     "sql-template-strings": "^2.2.2"
   },
+  "engines": {
+    "node": "10.x"
+  },
   "devDependencies": {
     "babel-eslint": "^10.0.1",
-    "nodemon": "^1.18.7"
+    "nodemon": "^1.19.1"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
