@@ -1,11 +1,7 @@
 const measurementsRouter = require('express').Router()
 const SQL = require('sql-template-strings')
 const { querySQL, mapTagToName } = require('../utils/tools')
-
 const createResponse = require('../utils/createResponse')
-
-
-
 
 measurementsRouter.get('/', (req, res) => {
   res.send('<h1>Hello World!</h1>')
@@ -44,7 +40,6 @@ measurementsRouter.post('/queryData', async (req, res) => {
   let tagi = mapTagToName(room)
 
   const queryString = (SQL`SELECT * FROM observations WHERE tagname = ${tagi} ORDER BY timestamp DESC LIMIT 1`)
-  console.log('query string: ', queryString)
   let queryResponse
   try {
     queryResponse = await querySQL(queryString)
@@ -57,8 +52,7 @@ measurementsRouter.post('/queryData', async (req, res) => {
     return res.json(createResponse())
   }
 
-  const value = queryResponse[0][requestedValue]
-  console.log('pyydetty arvo on ', value)
+  const value = Math.round(queryResponse[0][requestedValue])
   return res.json(createResponse(value, requestedValue, room))
 })
 

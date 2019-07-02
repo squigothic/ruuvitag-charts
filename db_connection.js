@@ -1,13 +1,6 @@
 require('dotenv').config()
 const mysql = require('mysql')
 
-// Connect to mysql database
-//let MYSQL_PORT = process.env.MYSQL_PORT
-// if (process.env.NODE_ENV === 'development') {
-//   MYSQL_PORT = process.env.MYSQL_PORT_DEV
-// }
-
-
 const config = {
   user: process.env.MYSQL_USER,
   password: process.env.MYSQL_PW,
