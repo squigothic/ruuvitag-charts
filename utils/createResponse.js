@@ -1,10 +1,24 @@
-const createResponse = (value, measurement, room) => {
-  const response = `${room} ${measurement} is ${value}`
+const createResponse = (value, measurement, room, error) => {
+
+  let needResponse = ''
+  let response = ''
+
+  if (!value || !measurement || !room) {
+    needResponse = true
+    response = 'Sorry, I didn\'t quite catch that'
+  } else if (error) {
+    needResponse = false
+    response = 'I can\'t communicate with the databse right now'
+  } else {
+    response = `${room} ${measurement} is ${value}`
+    needResponse = false
+  }
+
   const responseData = {
     'fulfillmentText': response,
     'payload': {
       'google': {
-        'expectUserResponse': false,
+        'expectUserResponse': needResponse,
         'richResponse': {
           'items': [
             {
@@ -20,7 +34,5 @@ const createResponse = (value, measurement, room) => {
   }
   return responseData
 }
-
-//const resolveQuery = ()
 
 module.exports = createResponse

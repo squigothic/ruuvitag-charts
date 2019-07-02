@@ -1,4 +1,5 @@
 const express = require('express')
+const { PORT } = require('./config')
 const cors = require('cors')
 const compression = require('compression')
 const measurementsRouter = require('./controllers/measurements')
@@ -19,7 +20,10 @@ app.use('/', measurementsRouter)
 
 app.use(middleware.error)
 
-const PORT = 3001
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`)
 })
+
+module.exports = {
+  app
+}
