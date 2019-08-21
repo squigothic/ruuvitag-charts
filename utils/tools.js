@@ -26,5 +26,18 @@ const mapTagToName = (room) => {
   }
 }
 
-module.exports = { querySQL, mapTagToName }
+const getGroupedBy = (data, key) => {
+  let groups = {}
+  let result = []
+  data.forEach((a) => {
+    if (!(a[key] in groups)) {
+      groups[a[key]] = []
+      result.push(groups[a[key]])
+    }
+    groups[a[key]].push(a)
+  })
+  return result
+}
+
+module.exports = { querySQL, mapTagToName, getGroupedBy }
 

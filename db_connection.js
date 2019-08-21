@@ -11,6 +11,10 @@ if (process.env.INSTANCE_CONNECTION_NAME && process.env.NODE_ENV === 'production
   config.socketPath = `/cloudsql/${process.env.INSTANCE_CONNECTION_NAME}`
 }
 
+if (process.env.NODE_ENV === 'development') {
+  config.port = 9000
+}
+
 const connection = mysql.createConnection(config)
 
 connection.connect((err) => {

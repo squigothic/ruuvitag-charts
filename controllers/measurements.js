@@ -1,6 +1,7 @@
 const measurementsRouter = require('express').Router()
 const SQL = require('sql-template-strings')
 const { querySQL, mapTagToName } = require('../utils/tools')
+const { getGroupedBy } = require('../utils/tools')
 const createResponse = require('../utils/createResponse')
 
 measurementsRouter.get('/', (req, res) => {
@@ -8,19 +9,17 @@ measurementsRouter.get('/', (req, res) => {
 })
 
 measurementsRouter.get('/measurements', async (req, res) => {
-
-  const queryString = (SQL`SELECT * FROM observations WHERE timestamp > UNIX_TIMESTAMP() - 87000`)
+  const user = req.query.user
+  const queryString = (SQL`SELECT * FROM tags LEFT JOIN observations ON tags.tag = observations.tagname WHERE timestamp > UNIX_TIMESTAMP() - 87000 AND tags.username = ${user}`)
   const measurements = await querySQL(queryString)
-  console.log('measurements kutsuttu')
-
-  res.json(measurements)
+  const measurementsInOrder = getGroupedBy(measurements, 'tagname')
+  res.json(measurementsInOrder)
 })
 
 measurementsRouter.get('/measurements/:tag', async (req, res) => {
   const tagi = req.params.tag
   const queryString = (SQL`SELECT * FROM observations WHERE timestamp > UNIX_TIMESTAMP() - 87000 AND tagname = ${tagi}`)
   const measurements = await querySQL(queryString)
-  console.log('tulokset: ', measurements)
   res.json(measurements)
 })
 
